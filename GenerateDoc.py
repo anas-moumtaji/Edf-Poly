@@ -1,16 +1,16 @@
-from docx import Document
-from docx.shared import Inches
-from docx.shared import Cm
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import datetime
 from dateutil.relativedelta import relativedelta
+from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-import sys
-
-# coding=utf-8
+from docx.shared import Cm
+from docx.shared import Inches
+import pandas
 
 # code de la page d'acceuil page1
 def pageAcceuil(document):
-    document.add_heading("Rapport d\'étude", 0)
+    document.add_heading("Rapport d'étude", 0)
     imagePath = 'Ressources/Images/logo.jpg'
     document.add_picture(imagePath, width=Inches(1.35))
 
@@ -44,7 +44,7 @@ def pageAcceuil(document):
     # add table ------------------
     table2 = document.add_table(1, 3)
     # populate header row --------
-    one_year_from_now = datetime.datetime.now() + relativedelta(years=1)
+    one_year_from_now = datetime.datetime.now() + relativedelta(years=0)
     date_formated = one_year_from_now.strftime("%d/%m/%Y")
 
     heading_cells = table2.rows[0].cells
@@ -180,10 +180,10 @@ def documentReference(document):
 
 
 def presentationSDF(document):
-    document.add_heading("Présentation des études de sûreté de fonctionnement",2)
-    document.add_heading("Cadre général du management des risques",4)
+    document.add_heading("Présentation des études de sûreté de fonctionnement",0)
+    document.add_heading("Cadre général du management des risques",2)
 
-    document.add_heading("Contexte",5)
+    document.add_heading("Contexte",3)
     document.add_paragraph("Les systèmes industriels sont conçus afin d’assurer un ensemble de fonctionnalités données dans des conditions définies comme acceptables. Pour un réseau électrique, par exemple, il s’agit généralement de garantir l’alimentation d’un ensemble de points de livraison, en respectant certaines exigences en termes de continuité de fourniture, de qualité de l’onde et de sûreté des biens et des personnes.")
     document.add_paragraph("Or, ces systèmes peuvent être victimes d’incidents susceptibles d’impacter leurs fonctionnements : il peut s’agir de défaillances matérielles des équipements, d’agressions environnementales (événements climatiques, incendies, pollution…), d’erreurs humaines, de vandalisme, etc")
     document.add_paragraph("Les manquements à ces fonctionnements attendus constituent, pour les entreprises qui opèrent ces systèmes, des événements redoutés, aussi appelés risques, qui peuvent être plus ou moins critiques en fonction :")
@@ -193,7 +193,7 @@ def presentationSDF(document):
 
 
     document.add_paragraph("")
-    document.add_heading("Les analyses de risques",5)
+    document.add_heading("Les analyses de risques",3)
     document.add_paragraph("Le management des risques s’appuie sur un processus d’analyse des risques, qui est la démarche formalisée visant à identifier, quantifier et apprécier l’importance relative des différents risques pesant sur un système (existant ou en conception), en vue d’orienter les décisions de l’organisme afin de se prémunir de ceux qu’elle juge inacceptables.")
     document.add_paragraph("De façon générale, les différentes étapes de cette démarche d’analyse sont illustrées sur la figure ci-après.")
 
@@ -440,14 +440,72 @@ def etudeSDF(document):
     document.add_paragraph("•	9,6 coupures très brèves par an en moyenne")
     document.add_paragraph("Concernant les coupures longues, les informations issues du « Contrat de Service Publique entre l’État et EDF » ont été utilisées pour paramétrer la fiabilité de l’alimentation électrique du site. L’hypothèse du nombre de coupures retenue pour l’étude est donc :")
     document.add_paragraph("•	1,5 coupure longue par an en moyenne")
-
     document.add_page_break()
-
-
 
 #Étude du réseau électrique interne existant - page 22/107
 def etudeReseauInterne(document):
     document.add_heading("Étude du réseau électrique interne existant",0)
+    document.add_heading("Introduction",3)
+    document.add_paragraph("Dans cette partie de l’étude, les réseaux électriques HT et BT de distribution internes existants ont été considérés. Les résultats présentés ci-après, constituent donc un cas de référence auquel seront ensuite comparés les résultats correspondant aux propositions d’évolution de l’architecture du site.")
+    document.add_heading("Présentation des modèles réalisés",3)
+    document.add_paragraph("En raison de la taille du réseau considéré, et du nombre important de points d’intérêt étudiés, plusieurs modèles ont été réalisés pour le réseau existant (un modèles HT et des modèles BT), afin d’éviter l’écueil d’un modèle unique difficilement lisible, et pour lequel les temps de calculs auraient été très importants :")
+    document.add_paragraph("Un modèle du réseau HT, utilisé pour estimer les valeurs des taux et des durées d’indisponibilités de l’alimentation électrique HT utilisées dans les modèles BT ainsi que les séquences de défaillance prépondérantes en HT au niveau des différentes postes. Ce modèle est représenté ci-dessous.",style='List Bullet')
+    document.add_paragraph("")
+    document.add_heading("            Inserez le modele HT ici",4)
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("Un modèle pour chaque réseau BT ............(à remplir en fonction des points d'alimentation)",style='List Bullet')
+    document.add_paragraph("")
+    document.add_heading("            Inserez la partie BT, Point d'alimentation 1,2,..",4)
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("Comme rappelé précédemment, ces modèles utilisent un formalisme de représentation proche du schéma unifilaire des installations du site. Les différents composants modélisés, qui correspondent aux matériels présents sur le site, ont été paramétrés de façon telle que leur comportement fonctionnel et dysfonctionnel soit cohérent avec le réseau réel. Sur la base de ce modèle, les outils de calcul de la Plateforme Figaro sont en capacité de parcourir et de quantifier le modèle markovien afin d’estimer les indicateurs d’intérêt de la sûreté de fonctionnement.")
+    document.add_heading("Hypothèses particulières considérées",3)
+    document.add_paragraph("En complément des hypothèses générales précédemment exposées, les hypothèses suivantes ont été considérées pour la modélisation du réseau électrique existant du site.")
+    document.add_paragraph("Point d'ouverture des boucles HT",style="Intense Quote")
+    document.add_paragraph("")
+    document.add_heading("            Inserez la position des point d'ouverture des boucle HT en fonction des Postes", 5)
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_heading("Résultats obtenus et interprétation",3)
+    document.add_paragraph("Cette section présente les principaux résultats de l’étude aux points d’intérêt. Des éléments d’interprétation de ces résultats sont mentionnés pour les différents cas étudiés. Les séquences de défaillances détaillées menant aux événements redoutés pour ces études ont été placées dans les annexes.")
+
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+    document.add_paragraph("")
+
+
+    excel_data_df = pandas.read_excel('Ressources/synthese_comparative_FigSeq.xlsx', sheet_name='1_PI_existant HT_evolutions HT', usecols = "A:C",skiprows = range(11, 58))
+    print(excel_data_df)
+
+    t = document.add_table(excel_data_df.shape[0] + 1, excel_data_df.shape[1])
+    t.style = 'Light List Accent 2'
+
+    for j in range(excel_data_df.shape[-1]):
+        if str(excel_data_df.columns[j]) == "Unnamed: 0":
+            excel_data_df.columns[j] == ""
+        else:
+            t.cell(0, j).text = excel_data_df.columns[j]
+
+    # add the rest of the data frame
+    for i in range(excel_data_df.shape[0]):
+        for j in range(excel_data_df.shape[-1]):
+            if str(excel_data_df.values[i, j]) == "nan":
+                t.cell(i + 1, j).text == ""
+            else:
+                t.cell(i + 1, j).text = str(excel_data_df.values[i, j])
 
 
 def main():
@@ -460,8 +518,8 @@ def main():
     presentationSDF(document)
     etudeSDF(document)
     etudeReseauInterne(document)
-    document.save('demo1.docx') # Save document
-
+    # Save Document
+    document.save('demo1.docx')
 
 if __name__ == "__main__":
     main()
