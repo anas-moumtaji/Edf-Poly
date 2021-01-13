@@ -1,6 +1,7 @@
 # Code For Word Report Automation Using pydoc
 
 
+
 ## Pandas and Pydoc
 
 This section of code show how to read data from Excel File and write it directly into the Word Document
