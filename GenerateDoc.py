@@ -486,19 +486,54 @@ def etudeReseauInterne(document):
     document.add_paragraph("")
     document.add_paragraph("")
 
-    Columnslist = ["Indisponibilité","Défiabilité*","Défiabilité*"]
 
+    # L'import de la dataframe avec la bibliotheque Pandas
     excel_data_df = pandas.read_excel('Ressources/synthese_comparative_FigSeq.xlsx', sheet_name='1_PI_existant HT_evolutions HT', usecols = "A:F",skiprows = range(11, 58))
     print(excel_data_df)
 
+    # I - POUR LE PREMIER TABLEAU
+
+    # 1 - on fait un filtrage de la dataFrame (Selectionner des columns precises)
+    Columnslist = ["Défiabilité*","Disponibilité"]
     df2 = excel_data_df[excel_data_df["Unnamed: 0"].str.contains('|'.join(Columnslist))]
-    print(df2)
 
-
-
-
-    t = document.add_table(excel_data_df.shape[0] + 1, excel_data_df.shape[1])
+    # 2 - on cree notre tableau
+    t = document.add_table(df2.shape[0] + 1, df2.shape[1])
     t.style = 'Light List Accent 2'
+
+    # 3 - on affiche le tableau dans le rapport
+    AfficherTableau(document,t, df2)
+
+
+    # II - POUR LE DEUXIEME TABLEAU
+
+   # 1 - on fait un filtrage de la dataFrame (Selectionner des columns precises)
+    Columnslist2 = ["MTTF*","Taux*","Indispo.*"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def AfficherTableau(document,t,excel_data_df):
+
 
     for j in range(excel_data_df.shape[-1]):
         if str(excel_data_df.columns[j]) == "Unnamed: 0":
@@ -514,6 +549,8 @@ def etudeReseauInterne(document):
             else:
                 t.cell(i + 1, j).text = str(excel_data_df.values[i, j])
 
+
+    print("")
 
 def main():
     document = Document()
