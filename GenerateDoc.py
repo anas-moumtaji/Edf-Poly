@@ -486,9 +486,16 @@ def etudeReseauInterne(document):
     document.add_paragraph("")
     document.add_paragraph("")
 
+    Columnslist = ["Indisponibilité","Défiabilité*","Défiabilité*"]
 
-    excel_data_df = pandas.read_excel('Ressources/synthese_comparative_FigSeq.xlsx', sheet_name='1_PI_existant HT_evolutions HT', usecols = "A:C",skiprows = range(11, 58))
+    excel_data_df = pandas.read_excel('Ressources/synthese_comparative_FigSeq.xlsx', sheet_name='1_PI_existant HT_evolutions HT', usecols = "A:F",skiprows = range(11, 58))
     print(excel_data_df)
+
+    df2 = excel_data_df[excel_data_df["Unnamed: 0"].str.contains('|'.join(Columnslist))]
+    print(df2)
+
+
+
 
     t = document.add_table(excel_data_df.shape[0] + 1, excel_data_df.shape[1])
     t.style = 'Light List Accent 2'
