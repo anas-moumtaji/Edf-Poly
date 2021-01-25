@@ -491,50 +491,34 @@ def etudeReseauInterne(document):
     excel_data_df = pandas.read_excel('Ressources/synthese_comparative_FigSeq.xlsx', sheet_name='1_PI_existant HT_evolutions HT', usecols = "A:F",skiprows = range(11, 58))
     print(excel_data_df)
 
-    # I - POUR LE PREMIER TABLEAU
+    # I - TABLEAU 1
 
     # 1 - on fait un filtrage de la dataFrame (Selectionner des columns precises)
     Columnslist = ["Défiabilité*","Disponibilité"]
-    df2 = excel_data_df[excel_data_df["Unnamed: 0"].str.contains('|'.join(Columnslist))]
+    df = excel_data_df[excel_data_df["Unnamed: 0"].str.contains('|'.join(Columnslist))]
 
     # 2 - on cree notre tableau
-    t = document.add_table(df2.shape[0] + 1, df2.shape[1])
+    t = document.add_table(df.shape[0] + 1, df.shape[1])
     t.style = 'Light List Accent 2'
 
     # 3 - on affiche le tableau dans le rapport
-    AfficherTableau(document,t, df2)
+    AfficherTableau(document,t, df)
+
+    document.add_paragraph("")
+    document.add_paragraph("Ces résultats peuvent être interprétés de façon plus intuitive à l’aide des indicateurs fournis dans le tableau ci-dessous :")
 
 
-    # II - POUR LE DEUXIEME TABLEAU
-
-   # 1 - on fait un filtrage de la dataFrame (Selectionner des columns precises)
-    Columnslist2 = ["MTTF*","Taux*","Indispo.*"]
-
+    # I - TABLEAU 2
+    Columnslist2 = ["MTTF*","Indispo.*"]
+    df2 = excel_data_df[excel_data_df["Unnamed: 0"].str.contains('|'.join(Columnslist2))]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    t2 = document.add_table(df2.shape[0] + 1, df2.shape[1])
+    t2.style ="Light List Accent 1"
+    AfficherTableau(document, t2, df2)
 
 
 def AfficherTableau(document,t,excel_data_df):
-
-
     for j in range(excel_data_df.shape[-1]):
         if str(excel_data_df.columns[j]) == "Unnamed: 0":
             excel_data_df.columns[j] == ""
@@ -550,7 +534,6 @@ def AfficherTableau(document,t,excel_data_df):
                 t.cell(i + 1, j).text = str(excel_data_df.values[i, j])
 
 
-    print("")
 
 def main():
     document = Document()
